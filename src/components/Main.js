@@ -1,59 +1,111 @@
 import PropTypes from 'prop-types'
-import React from 'react'
-import pic01 from '../images/pic01.jpg'
-import pic02 from '../images/pic02.jpg'
-import pic03 from '../images/pic03.jpg'
-import {API} from 'aws-amplify'
-class Main extends React.Component {
-   
-  componentDidMount() {
+import React, {useState, useEffect} from 'react'
+import imageUrlBuilder from "@sanity/image-url"
+//import {API} from 'aws-amplify'
+import client from '../sanity'
+import BlockContent from "@sanity/block-content-to-react"
 
-    API.configure({
-      API: {
-        endpoints: [
-          {
-            name: "mongo",
-            endpoint: 'https://2h53j09wuh.execute-api.us-east-2.amazonaws.com/prod',
-            region: 'us-east-2'
-          },
-        ]
+const builder= imageUrlBuilder(client)
+function urlFor(_ref) {
+  return builder.image(_ref)
+}
+
+const Main = (props) => {
+   const [products, setProducts] = useState([])
+   useEffect(() => {
+     onLoad()
+   }, [])
+  async function onLoad() {
+   try { 
+    const products = await client.fetch(` *[_type == 'product']{
+      ...,
+      "categoriesX": categories[].asset->title
+    }`)
+    console.log("products:" , products)
+    setProducts(products)
+  }catch (e) {
+    if(e !== "No current product"){
+      alert(e)
       }
-    })
-   }
-  render() {
-    let close = (
+    }
+  }
+
+    let close = () => (
       <div
         className="close"
         onClick={() => {
-          this.props.onCloseArticle()
+          props.onCloseArticle()
         }}
       ></div>
     )
 
     return (
-      <div
-        ref={this.props.setWrapperRef}
-        id="main"
-        style={this.props.timeout ? { display: 'flex' } : { display: 'none' }}
-      >
-        <article
-          id="Shop"
-          className={`${this.props.article === 'Shop' ? 'active' : ''} ${
-            this.props.articleTimeout ? 'timeout' : ''
-          }`}
-          style={{ display: 'none' }}
-        >
-          <h2 className="major">Shop</h2>
-          <li>tops</li>
-          <li> bottoms</li>
-          <li> accessories </li>
-          {close}
-        </article>
+      <div id="main" ref={props.setWrapperRef} 
+      style={props.timeout ? { display: 'flex' } : { display: 'none' }}>
+      
+      
+      <article id="Shop" className={`${props.article === 'Shop' ? 'active' : ''} 
+      ${props.articleTimeout ? 'timeout' : ''}`}
+        style={{ display: 'none' }}>
+      <h2 className="major">Shop</h2>
+      {close}
 
-        <article
+      <div style={{display: 'flex', padding: 6}}>
+
+      {products.map((product, index) => {
+        let styles = {
+          color: 'black'
+        }
+        
+        return(
+          <React.Fragment>
+
+          <div style={{ 
+            border: 'none',
+            borderRadius: '3px',
+            backgroundColor: 'white',
+            boxShadow: "rgba(0, 0, 0, 0.3) 0px 1px 4px 0px",
+            fontSize: "20px",
+            paddingLeft: 6,
+            paddingRight: 6,
+            minWidth: 300,
+            maxWidth: 300,
+            textAlign: 'center',
+            marginLeft: 8,
+            marginRight: 8,
+            marginBottom: 2,
+            maxHeight: 600,
+            minHeight: 600,
+          
+          }}> 
+          <div style={styles} id= "productCard">
+          <div style={{fontSize: '30px', fontWeight: 'bold'}}> {product.title}</div>
+          <div> 
+          <img id="productimage" src={urlFor(product.image.asset).height(200).width(200)} alt="productimage" /></div>
+          <div> ${product.price}</div>
+          <div> {product.color}</div>
+          <div> <BlockContent blocks={product.size} projectId ="rws2i9gu" dataset="whitney" /> </div>
+          <div style = {{maxHeight: 200}}> <BlockContent blocks={product.description} projectId ="rws2i9gu" dataset="whitney" /></div>
+          <div> id: {product.id}</div>
+          <div> # {product.sku}</div>
+          <button style={{backgroundColor: 'black'}} onClick=""> add to cart </button>
+          <div> {product.categories}</div>
+          </div>
+          
+          </div>
+          
+          <br /><br />
+          </React.Fragment>
+
+        )
+      })}
+      </div>
+    </article>
+
+    <article
           id="Cart"
-          className={`${this.props.article === 'Cart' ? 'active' : ''} ${
-            this.props.articleTimeout ? 'timeout' : ''
+          className={`${props.article === 'Cart' ? 'active' : ''} ${
+            props.articleTimeout ? 'timeout' : ''
           }`}
           style={{ display: 'none' }}
         >
@@ -63,31 +115,29 @@ class Main extends React.Component {
 
         <article
           id="Account"
-          className={`${this.props.article === 'Account' ? 'active' : ''} ${
-            this.props.articleTimeout ? 'timeout' : ''
+          className={`${props.article === 'Account' ? 'active' : ''} ${
+            props.articleTimeout ? 'timeout' : ''
           }`}
           style={{ display: 'none' }}
         >
           <h2 className="major">Account</h2>
-          <span className="image main">
-            <img src={pic03} alt="" />
-          </span>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent
-            eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam
-            erat volutpat. Praesent urna nisi, fringila lorem et vehicula
-            lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices.
-            Aliquam libero et malesuada fames ac ante ipsum primis in faucibus.
-            Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit
-            amet.
-          </p>
+          <form method="post" action="#">
+            <div className="field half first">
+              <label htmlFor="username">Username</label>
+              <input type="text" name="name" id="name" />
+            </div>
+            <div className="field half">
+              <label htmlFor="password">password</label>
+              <input type="text" name="password" id="password" />
+            </div>
+            </form>
           {close}
         </article>
 
         <article
           id="contact"
-          className={`${this.props.article === 'contact' ? 'active' : ''} ${
-            this.props.articleTimeout ? 'timeout' : ''
+          className={`${props.article === 'contact' ? 'active' : ''} ${
+            props.articleTimeout ? 'timeout' : ''
           }`}
           style={{ display: 'none' }}
         >
@@ -147,7 +197,7 @@ class Main extends React.Component {
       </div>
     )
   }
-}
+
 
 Main.propTypes = {
   route: PropTypes.object,
