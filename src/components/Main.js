@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types'
 import React, {useState, useEffect} from 'react'
 import imageUrlBuilder from "@sanity/image-url"
-//import {API} from 'aws-amplify'
 import client from '../sanity'
 import BlockContent from "@sanity/block-content-to-react"
 
