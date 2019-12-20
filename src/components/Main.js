@@ -83,7 +83,7 @@ const Main = (props) => {
           <img id="productimage" src={urlFor(product.image.asset).height(200).width(200)} alt="productimage" /></div>
           <div> ${product.price}</div>
           <div> {product.color}</div>
-          <div> <BlockContent blocks={product.size} projectId ="rws2i9gu" dataset="whitney" /> </div>
+          <div> {product.size} </div>
           <div style = {{maxHeight: 200}}> <BlockContent blocks={product.description} projectId ="rws2i9gu" dataset="whitney" /></div>
           <div> id: {product.id}</div>
           <div> # {product.sku}</div>
