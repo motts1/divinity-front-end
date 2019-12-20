@@ -3,12 +3,13 @@ import React, {useState, useEffect} from 'react'
 import imageUrlBuilder from "@sanity/image-url"
 import client from '../sanity'
 import BlockContent from "@sanity/block-content-to-react"
+import Prod from '../components/item'
+import {Container, Row} from 'react-bootstrap'
 
 const builder= imageUrlBuilder(client)
 function urlFor(_ref) {
   return builder.image(_ref)
 }
-
 const Main = (props) => {
    const [products, setProducts] = useState([])
    useEffect(() => {
@@ -16,10 +17,7 @@ const Main = (props) => {
    }, [])
   async function onLoad() {
    try { 
-    const products = await client.fetch(` *[_type == 'product']{
-      ...,
-      "categoriesX": categories[].asset->title
-    }`)
+    const products = await client.fetch(` *[_type == 'product']`)
     console.log("products:" , products)
     setProducts(products)
   }catch (e) {
@@ -28,7 +26,6 @@ const Main = (props) => {
       }
     }
   }
-
     let close = () => (
       <div
         className="close"
@@ -41,65 +38,32 @@ const Main = (props) => {
     return (
       <div id="main" ref={props.setWrapperRef} 
       style={props.timeout ? { display: 'flex' } : { display: 'none' }}>
-      
-      
       <article id="Shop" className={`${props.article === 'Shop' ? 'active' : ''} 
       ${props.articleTimeout ? 'timeout' : ''}`}
         style={{ display: 'none' }}>
       <h2 className="major">Shop</h2>
-      {close}
-
-      <div style={{display: 'flex', padding: 6}}>
-
+      <div >
+      <Container>
+      <Row>
       {products.map((product, index) => {
         let styles = {
-          color: 'black'
+          color: 'white'
         }
-        
         return(
-          <React.Fragment>
-
-          <div style={{ 
-            border: 'none',
-            borderRadius: '3px',
-            backgroundColor: 'white',
-            boxShadow: "rgba(0, 0, 0, 0.3) 0px 1px 4px 0px",
-            fontSize: "20px",
-            paddingLeft: 6,
-            paddingRight: 6,
-            minWidth: 300,
-            maxWidth: 300,
-            textAlign: 'center',
-            marginLeft: 8,
-            marginRight: 8,
-            marginBottom: 2,
-            maxHeight: 600,
-            minHeight: 600,
-          
-          }}> 
-          <div style={styles} id= "productCard">
-          <div style={{fontSize: '30px', fontWeight: 'bold'}}> {product.title}</div>
-          <div> 
-          <img id="productimage" src={urlFor(product.image.asset).height(200).width(200)} alt="productimage" /></div>
-          <div> ${product.price}</div>
-          <div> {product.color}</div>
-          <div> {product.size} </div>
-          <div style = {{maxHeight: 200}}> <BlockContent blocks={product.description} projectId ="rws2i9gu" dataset="whitney" /></div>
-          <div> id: {product.id}</div>
-          <div> # {product.sku}</div>
-          <button style={{backgroundColor: 'black'}} onClick=""> add to cart </button>
-          <div> {product.categories}</div>
-          </div>
-          
-          </div>
-          
-          <br /><br />
-          </React.Fragment>
-
+        <Prod product={product} />
+        )
+      })}
+      </Row>
+      </Container>
         )
       })}
       </div>
+ 
+    {close}
     </article>
+    
+      
+    
 
     <article
           id="Cart"
@@ -110,7 +74,7 @@ const Main = (props) => {
         >
           <h2 className="major">Cart</h2>
           {close}
-        </article>
+    </article>
 
         <article
           id="Account"
