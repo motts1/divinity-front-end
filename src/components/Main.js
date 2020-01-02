@@ -5,11 +5,8 @@ import client from '../sanity'
 import BlockContent from "@sanity/block-content-to-react"
 import Prod from '../components/item'
 import {Container, Row} from 'react-bootstrap'
+import cart from './cart.js'
 
-const builder= imageUrlBuilder(client)
-function urlFor(_ref) {
-  return builder.image(_ref)
-}
 const Main = (props) => {
    const [products, setProducts] = useState([])
    useEffect(() => {
@@ -42,12 +39,13 @@ const Main = (props) => {
       ${props.articleTimeout ? 'timeout' : ''}`}
         style={{ display: 'none' }}>
       <h2 className="major">Shop</h2>
+      <article>
       <div >
       <Container>
       <Row>
       {products.map((product, index) => {
         let styles = {
-          color: 'white'
+          color: 'black'
         }
         return(
         <Prod product={product} />
@@ -58,6 +56,7 @@ const Main = (props) => {
         )
       })}
       </div>
+      </article>
  
     {close}
     </article>
