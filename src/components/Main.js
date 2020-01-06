@@ -56,7 +56,7 @@ const Main = (props) => {
       ${props.articleTimeout ? 'timeout' : ''}`}
         style={{ display: 'none' }}>
       <h2 className="major">Shop</h2>
-      <article>
+      
       <div >
       <Container>
       <Row>
@@ -76,7 +76,7 @@ const Main = (props) => {
       </article>
  
     {close}
-    </article>
+    
 
     <article
           id="Cart"
