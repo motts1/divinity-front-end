@@ -22,40 +22,6 @@ const Main = (props) => {
       }
     }
   }
-  // let deleteItem = (products) => {
-  //   setProducts(prevState => {
-  //     const cartItem = [...prevState.cartItem];
-  //     let newCart = cartItem.filter(item => item.name !== products.name);
-  //     return {cartItems : newCart};
-  //   });
-  // }
-  let addItem = (products, qty) => {
-    setProducts(prevState => {
-      const cartItem = [...prevState.products];
-      products.qty = qty;
-      cartItem.push(products);
-      console.log(cartItem);
-    })
-  }
-  // let totalPrice = (products) => {
-  //   sum += product.price * product.qty;
-  //   return sum;
-  // }
-  // let updateCart = (products) => {
-  //   let productQuantity = cartProducts.reduce((sum, product) => {
-  //     sum += p.quantity;
-  //     return sum;
-  //   }, 0);
-  // }
-    
-    // let qty=(product) => {
-    //   setProducts(prevState => {
-    //     const ol
-    //   })
-    // }
-    // let cartItem = (products) => {
-
-    // }
  let close = () => (
       <div
         className="close"
