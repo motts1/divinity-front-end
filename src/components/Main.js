@@ -1,14 +1,13 @@
 import PropTypes from 'prop-types'
 import React, {useState, useEffect} from 'react'
-import imageUrlBuilder from "@sanity/image-url"
 import client from '../sanity'
-import BlockContent from "@sanity/block-content-to-react"
 import Prod from '../components/item'
 import {Container, Row} from 'react-bootstrap'
 import Cart from './cart'
+import moment from "moment";
 
 const Main = (props) => {
-   const [products, setProducts] = useState([])
+   const [products, setProducts ] = useState([])
    useEffect(() => {
      onLoad()
    }, [])
@@ -23,32 +22,49 @@ const Main = (props) => {
       }
     }
   }
-    let close = () => (
+  // let deleteItem = (products) => {
+  //   setProducts(prevState => {
+  //     const cartItem = [...prevState.cartItem];
+  //     let newCart = cartItem.filter(item => item.name !== products.name);
+  //     return {cartItems : newCart};
+  //   });
+  // }
+  let addItem = (products, qty) => {
+    setProducts(prevState => {
+      const cartItem = [...prevState.products];
+      products.qty = qty;
+      cartItem.push(products);
+      console.log(cartItem);
+    })
+  }
+  // let totalPrice = (products) => {
+  //   sum += product.price * product.qty;
+  //   return sum;
+  // }
+  // let updateCart = (products) => {
+  //   let productQuantity = cartProducts.reduce((sum, product) => {
+  //     sum += p.quantity;
+  //     return sum;
+  //   }, 0);
+  // }
+    
+    // let qty=(product) => {
+    //   setProducts(prevState => {
+    //     const ol
+    //   })
+    // }
+    // let cartItem = (products) => {
+
+    // }
+ let close = () => (
       <div
         className="close"
         onClick={() => {
           props.onCloseArticle()
         }}
       ></div>
-    )
-    let deleteItem = (products) => {
-      console.log(products);
-      setProducts(prevState => {
-        const cartItem = [...prevState.cartItem];
-        let newCart = cartItem.filter(item => item.name !== products.name);
-        return {cartItems : newCart};
-      });
-    }
-    let addItem = (products, qty) => {
-      console.log(products);
-      setProducts(prevState => {
-        const cartItem = [...prevState.cartItem];
-        products.qty = qty;
-        cartItem.push(products);
-        console.log(cartItem);
-      })
-    }
-
+    )   
+  
     return (
       <div id="main" ref={props.setWrapperRef} 
       style={props.timeout ? { display: 'flex' } : { display: 'none' }}>
@@ -61,9 +77,6 @@ const Main = (props) => {
       <Container>
       <Row>
       {products.map((product, index) => {
-        let styles = {
-          color: 'black'
-        }
         return(
         <Prod product={product} />
         )
@@ -85,11 +98,9 @@ const Main = (props) => {
           }`}
           style={{ display: 'none' }}
         >
-          <h2 className="major">Cart</h2>
+        <h2 className="major">Cart</h2>
           {close}
-         <Cart 
-         deleteItem = {props.deleteItem}
-         />
+          <Cart />
     </article>
 
         <article
