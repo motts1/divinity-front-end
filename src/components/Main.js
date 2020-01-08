@@ -4,7 +4,6 @@ import client from '../sanity'
 import Prod from '../components/item'
 import {Container, Row} from 'react-bootstrap'
 import Cart from './cart'
-import moment from "moment";
 
 const Main = (props) => {
    const [products, setProducts ] = useState([])
@@ -66,7 +65,7 @@ const Main = (props) => {
         >
         <h2 className="major">Cart</h2>
           {close}
-          <Cart />
+          <Cart/>
     </article>
 
         <article
