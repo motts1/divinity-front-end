@@ -3,22 +3,21 @@ import imageUrlBuilder from "@sanity/image-url"
 import client from '../sanity'
 import BlockContent from "@sanity/block-content-to-react"
 import 'bootstrap/dist/css/bootstrap.min.css'
-import {Col} from 'react-bootstrap'
-import Cart, {addItem}  from './cart'
+import { Col } from 'react-bootstrap'
 
-const builder= imageUrlBuilder(client)
+const builder = imageUrlBuilder(client)
 function urlFor(_ref) {
-  return builder.image(_ref)
+    return builder.image(_ref)
 }
 
 const Prod = (props) => {
 
-    const {product} = props;
+    const { product, addItem } = props;
     console.log(addItem);
-        return ( 
-            <Col xs= {12} md={4}>
+    return (
+        <Col xs={12} md={4}>
             <React.Fragment>
-                <div style={{ 
+                <div style={{
                     border: 'none',
                     borderRadius: '3px',
                     backgroundColor: 'white',
@@ -35,23 +34,24 @@ const Prod = (props) => {
                     maxHeight: 800,
                     minHeight: 600,
                     color: 'black',
-                }}> 
-            <div>
-                <div style={{fontSize: '30px', fontWeight: 'bold'}}> {product.title}</div>
-                <div> 
-                <img id="productimage" src={urlFor(product.image.asset).height(400).width(300)} alt="productimage" /></div>
-                <div> ${product.price}.</div>
-                <div> {product.color}</div>
-                <div> {product.size} </div>
-                <div style = {{maxHeight: 200}}> <BlockContent blocks={product.description} projectId ="rws2i9gu" dataset="whitney" /></div>
-                <div> id: {product.id}</div>
-                <div> # {product.sku}</div>
-                <button onClick = {addItem} style={{backgroundColor: 'black'}} > add to cart </button>
-                <div> {product.categories}</div>
+                }}>
+                    <div>
+                        <p style={{ fontSize: '30px', fontWeight: 'bold' }}> {product.title}
+                        </p>
+                        <div>
+                            <img id="productimage" src={urlFor(product.image.asset).height(400).width(300)} alt="productimage" /></div>
+                        <p> ${product.price}.</p>
+                        <p> {product.color}</p>
+                        <p> {product.size} </p>
+                        <div style={{ maxHeight: 200 }}> <BlockContent blocks={product.description} projectId="rws2i9gu" dataset="whitney" /></div>
+                        <div> id: {product.id}</div>
+                        <div> # {product.sku}</div>
+                        <button onClick={() => addItem(product)} style={{ backgroundColor: 'black' }} > add to cart </button>
+                        <div> {product.categories}</div>
+                    </div>
                 </div>
-                </div>
-                </React.Fragment> 
-                </Col>
+            </React.Fragment>
+        </Col>
     )
-   }
-   export default Prod;
+}
+export default Prod;

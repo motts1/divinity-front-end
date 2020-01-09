@@ -3,24 +3,75 @@ import React, {useState, useEffect} from 'react'
 import client from '../sanity'
 import Prod from '../components/item'
 import {Container, Row} from 'react-bootstrap'
-import Cart from './cart'
 
 const Main = (props) => {
    const [products, setProducts ] = useState([])
+   const [cart, setCart] = useState([])
+
    useEffect(() => {
      onLoad()
    }, [])
+
+
   async function onLoad() {
    try { 
     const products = await client.fetch(` *[_type == 'product']`)
     console.log("products:" , products)
     setProducts(products)
-  }catch (e) {
+
+  }
+  catch (e) {
     if(e !== "No current product"){
       alert(e)
       }
     }
   }
+
+  let deleteItem = (index) => {
+    let newCart = [];
+    console.log('delete item', index);
+    cart.map((item, i) => {
+        if(i != index) {
+            newCart.push(item);
+        }
+    }
+    )
+    setCart(newCart);
+}
+
+let addItem = (product) => {
+    let newCart = cart.slice()
+    console.log('add item', product);
+    newCart.push(product)
+    setCart(newCart);
+}
+let incrementQuantity = (index) => {
+    console.log('increment quantity index:', index);
+    let updatedIncreaseQty = cart.slice();
+    console.log(updatedIncreaseQty);
+    updatedIncreaseQty[index].quantity = updatedIncreaseQty[index].quantity + 1
+    setCart(updatedIncreaseQty)
+    console.log('New Cart? :' , cart)
+    // cart[index].quantity = cart[index].quantity +1;
+    // console.log(cart[index].quantity);
+}
+
+let decrementQuantity = (index) => {
+    let updateDecreaseQty = cart.slice();
+    console.log(updateDecreaseQty);
+    updateDecreaseQty[index].quantity = updateDecreaseQty[index].quantity -1;
+    setCart(updateDecreaseQty);
+}
+
+let totalPrice = (index) => {
+    console.log('your total is:', index);
+    let cartTotal = index.price * index.quantity;
+    console.log(cartTotal);
+    setCart(cartTotal);
+  }
+
+
+
  let close = () => (
       <div className="close" onClick={() => {props.onCloseArticle()}}></div>
       )   
@@ -35,7 +86,10 @@ const Main = (props) => {
       {products.map((product, index) => {
         
       return(
-        <Prod product={product} />
+        <Prod 
+          product={product}
+          addItem={addItem}
+        />
       )
       })}
         </Row>
@@ -48,7 +102,23 @@ const Main = (props) => {
 
     <article id="Cart" className={`${props.article === 'Cart' ? 'active' : ''} ${props.articleTimeout ? 'timeout' : ''}`} style={{ display: 'none' }}>
       <h2 className="major">Cart</h2>
-        <Cart />
+      <div style={{color: 'white'}}>
+            {console.log(cart)}
+            {cart.map((item, index) => {
+                return (
+                    <div style={{display: 'flex', flexDirection: 'column'}}> 
+                        <h6>{item.price}</h6>
+                        <h6>{item.quantity}</h6>
+                        <h6>{item.color}</h6>
+                        <button onClick = {() => incrementQuantity(index)}> add </button>
+                        <button onClick = {() => decrementQuantity(index)}> subtract </button>
+                        <button onClick = {() => deleteItem(index)} > delete item </button>
+                        <button onClick = {() => addItem(index)} > add item </button>
+                        <button onClick = {() => totalPrice(index)} > total </button>
+                        </div>
+                )
+            })}
+         </div>
     </article>
     {close}
 
