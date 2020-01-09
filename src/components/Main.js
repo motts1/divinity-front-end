@@ -22,67 +22,38 @@ const Main = (props) => {
     }
   }
  let close = () => (
-      <div
-        className="close"
-        onClick={() => {
-          props.onCloseArticle()
-        }}
-      ></div>
-    )   
-  
+      <div className="close" onClick={() => {props.onCloseArticle()}}></div>
+      )   
+
     return (
-      <div id="main" ref={props.setWrapperRef} 
-      style={props.timeout ? { display: 'flex' } : { display: 'none' }}>
-      <article id="Shop" className={`${props.article === 'Shop' ? 'active' : ''} 
-      ${props.articleTimeout ? 'timeout' : ''}`}
-        style={{ display: 'none' }}>
-      <h2 className="major">Shop</h2>
-      
-      <div >
-      <Container>
-      <Row>
+      <div id="main" ref={props.setWrapperRef} style={props.timeout ? { display: 'flex' } : { display: 'none' }}>
+        <article id="Shop" className={`${props.article === 'Shop' ? 'active' : ''} ${props.articleTimeout ? 'timeout' : ''}`} style={{ display: 'none' }}>
+          <h2 className="major">Shop</h2>
+            <div >
+        <Container>
+        <Row>
       {products.map((product, index) => {
-        return(
+        
+      return(
         <Prod product={product} />
-        )
+      )
       })}
-      </Row>
-      </Container>
+        </Row>
+        </Container>
         )
       })}
       </div>
       </article>
- 
     {close}
-    
 
-    <article
-          id="Cart"
-          className={`${props.article === 'Cart' ? 'active' : ''} ${
-            props.articleTimeout ? 'timeout' : ''
-          }`}
-          style={{ display: 'none' }}
-        >
-        <h2 className="major">Cart</h2>
-{/* <div>
-        {cart.map((quantity)) => {
-          return(
-          <Cart/>
-          )
-        })}
-     </div>      */}
-         
-          <Cart />
+    <article id="Cart" className={`${props.article === 'Cart' ? 'active' : ''} ${props.articleTimeout ? 'timeout' : ''}`} style={{ display: 'none' }}>
+      <h2 className="major">Cart</h2>
+        <Cart />
     </article>
- {close}
-        <article
-          id="Account"
-          className={`${props.article === 'Account' ? 'active' : ''} ${
-            props.articleTimeout ? 'timeout' : ''
-          }`}
-          style={{ display: 'none' }}
-        >
-          <h2 className="major">Account</h2>
+    {close}
+
+    <article id="Account" className={`${props.article === 'Account' ? 'active' : ''} ${props.articleTimeout ? 'timeout' : ''}`}style={{ display: 'none' }}>
+      <h2 className="major">Account</h2>
           <form method="post" action="#">
             <div className="field half first">
               <label htmlFor="username">Username</label>
@@ -94,17 +65,11 @@ const Main = (props) => {
             </div>
             </form>
           {close}
-        </article>
+    </article>
 
-        <article
-          id="contact"
-          className={`${props.article === 'contact' ? 'active' : ''} ${
-            props.articleTimeout ? 'timeout' : ''
-          }`}
-          style={{ display: 'none' }}
-        >
-          <h2 className="major">Contact</h2>
-          <form method="post" action="#">
+    <article id="contact" className={`${props.article === 'contact' ? 'active' : ''} ${props.articleTimeout ? 'timeout' : ''}`}style={{ display: 'none' }}>
+      <h2 className="major">Contact</h2>
+        <form method="post" action="#">
             <div className="field half first">
               <label htmlFor="name">Name</label>
               <input type="text" name="name" id="name" />
@@ -159,7 +124,6 @@ const Main = (props) => {
       </div>
     )
   }
-
 
 Main.propTypes = {
   route: PropTypes.object,
