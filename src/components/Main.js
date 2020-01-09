@@ -64,10 +64,17 @@ const Main = (props) => {
           style={{ display: 'none' }}
         >
         <h2 className="major">Cart</h2>
-          {close}
+{/* <div>
+        {cart.map((quantity)) => {
+          return(
           <Cart/>
+          )
+        })}
+     </div>      */}
+         
+          <Cart />
     </article>
-
+ {close}
         <article
           id="Account"
           className={`${props.article === 'Account' ? 'active' : ''} ${

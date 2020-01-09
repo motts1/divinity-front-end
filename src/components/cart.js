@@ -1,98 +1,104 @@
 import React, {useState, useEffect} from 'react'
 
-let cartData = {
-    item1 :{
-        color: 'blue',
-        price: 10.99,
-        size: 'L',
-        quantity: 1
-    },
-    item2 :{
-        color: 'black',
-        price: 15.00,
-        size: 'S',
-        quantity:1
-    },
-    item3 : {
-        color: 'pink',
-        price: 25.50,
-        size: 'M',
-        quantity:1
-    }
-};
-
 const Cart = (props) => {
-    const quantity = cartData.item1.quantity;
-    console.log(quantity);
-    const newCartQuantity = quantity + 1;
-    console.log(newCartQuantity);
+    const [cart, setCart] = useState([])
+     
+    useEffect(() => {
+        onLoad()
+    }, [])
 
-    const[cart , setCart ] = useState([])
-   useEffect(() => {
-            onLoad()
-        }, [])
-        async function onLoad() {
-            try {
-                const cart = cartData;
-                console.log('cart:' , cart);
-                setCart(cart)
-                const cartQuantity = setCart(quantity);
-                console.log(cartQuantity);
-            }catch (e) {
-                if(e !== " Add an item to your cart"){
-                    alert(e)
-                }
-            }
+    let cartData = [
+        {
+            color: 'blue',
+            price: 10.99,
+            size: 'L',
+            quantity: 1
+        },
+        {
+            color: 'black',
+            price: 15.00,
+            size: 'S',
+            quantity: 5
+        },
+        {
+            color: 'pink',
+            price: 25.50,
+            size: 'M',
+            quantity: 3
         }
-      
-//contain business logic/ functions
-//pass them down into cart item component
+    ]
 
-// let deleteItem = (products) => {
-  //   setProducts(prevState => {
-  //     const cartItem = [...prevState.cartItem];
-  //     let newCart = cartItem.filter(item => item.name !== products.name);
-  //     return {cartItems : newCart};
-  //cart.delete(cartItem[i])
-  //   });
-  // }
-    // let addItem = (products, qty) => {
-  //   setProducts(prevState => {
-  //     const cartItem = [...prevState.products];
-  //     products.qty = qty;
-  //     cartItem.push(products);
-  //     console.log(cartItem);
-  //   })
-  // }
-    // let totalPrice = (products) => {
-  //   sum += product.price * product.qty;
-  //   return sum;
-  // }
-  // let updateQuantity = (products) => {
-  //   let productQuantity = cartProducts.reduce((sum, product) => {
-  //     sum += p.quantity;
-  //     return sum;
-  //   }, 0);
-  // }
+    async function onLoad() {
+        setCart(cartData)
 
+    }
     
-    // let qty=(product) => {
-    //   setProducts(prevState => {
-    //     const ol
-    //   })
-    // }
-    // let cartItem = (products) => {
+let deleteItem = (index) => {
+    let newCart = [];
+    console.log('delete item', index);
+    cart.map((item, i) => {
+        if(i != index) {
+            newCart.push(item);
+        }
+    }
+    )
+    setCart(newCart);
+}
 
-    // }
+let addItem = (index) => {
+    let newCart = [];
+    console.log('add item', index);
+    cart.map((item, i) => {
+        if(i === index) {
+            newCart.push(item);
+        }
+    }
+    )
+    setCart(newCart);
+}
+let incrementQuantity = (index) => {
+    console.log('increment quantity index:', index);
+    let updatedIncreaseQty = cart.slice();
+    console.log(updatedIncreaseQty);
+    updatedIncreaseQty[index].quantity = updatedIncreaseQty[index].quantity + 1
+    setCart(updatedIncreaseQty)
+    console.log('New Cart? :' , cart)
+    // cart[index].quantity = cart[index].quantity +1;
+    // console.log(cart[index].quantity);
+}
+
+let decrementQuantity = (index) => {
+    let updateDecreaseQty = cart.slice();
+    console.log(updateDecreaseQty);
+    updateDecreaseQty[index].quantity = updateDecreaseQty[index].quantity -1;
+    setCart(updateDecreaseQty);
+}
+
+let totalPrice = (index) => {
+    console.log('your total is:', index);
+    let cartTotal = index.price * index.quantity;
+    console.log(cartTotal);
+    setCart(cartTotal);
+  }
+
     return(
         <div style={{color: 'white'}}>
-            <p > hi</p>
-            <h3> <Cart  /></h3>
-            {/* <div>
-                <Cart />
-            </div> */}
-        {/* <h3 onClick = {this.props.deleteItem} > delete item </h3> */}
-        </div>
+            {console.log(cart)}
+            {cart.map((item, index) => {
+                return (
+                    <div style={{display: 'flex', flexDirection: 'column'}}> 
+                        <h6>{item.price}</h6>
+                        <h6>{item.quantity}</h6>
+                        <h6>{item.color}</h6>
+                        <button onClick = {() => incrementQuantity(index)}> add </button>
+                        <button onClick = {() => decrementQuantity(index)}> subtract </button>
+                        <button onClick = {() => deleteItem(index)} > delete item </button>
+                        <button onClick = {() => addItem(index)} > add item </button>
+                        <button onClick = {() => totalPrice(index)} > total </button>
+                        </div>
+                )
+            })}
+         </div>
     )
 }
 
