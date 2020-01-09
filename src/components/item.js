@@ -4,6 +4,7 @@ import client from '../sanity'
 import BlockContent from "@sanity/block-content-to-react"
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {Col} from 'react-bootstrap'
+import Cart, {addItem}  from './cart'
 
 const builder= imageUrlBuilder(client)
 function urlFor(_ref) {
@@ -13,6 +14,7 @@ function urlFor(_ref) {
 const Prod = (props) => {
 
     const {product} = props;
+    console.log(addItem);
         return ( 
             <Col xs= {12} md={4}>
             <React.Fragment>
@@ -30,7 +32,7 @@ const Prod = (props) => {
                     marginLeft: 6,
                     marginRight: 6,
                     marginBottom: 2,
-                    maxHeight: 700,
+                    maxHeight: 800,
                     minHeight: 600,
                     color: 'black',
                 }}> 
@@ -44,7 +46,7 @@ const Prod = (props) => {
                 <div style = {{maxHeight: 200}}> <BlockContent blocks={product.description} projectId ="rws2i9gu" dataset="whitney" /></div>
                 <div> id: {product.id}</div>
                 <div> # {product.sku}</div>
-                <button style={{backgroundColor: 'black'}} onClick=""> add to cart </button>
+                <button onClick = {addItem} style={{backgroundColor: 'black'}} > add to cart </button>
                 <div> {product.categories}</div>
                 </div>
                 </div>
