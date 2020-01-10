@@ -27,11 +27,11 @@ const Main = (props) => {
     }
   }
 
-  let deleteItem = (index) => {
+  let deleteItem = (product) => {
     let newCart = [];
-    console.log('delete item', index);
+    console.log('delete item', product);
     cart.map((item, i) => {
-        if(i != index) {
+        if(i != product) {
             newCart.push(item);
         }
     }
@@ -42,14 +42,17 @@ const Main = (props) => {
 let addItem = (product) => {
     let newCart = cart.slice()
     console.log('add item', product);
+    product.quantity = 1;
     newCart.push(product)
     setCart(newCart);
 }
-let incrementQuantity = (index) => {
-    console.log('increment quantity index:', index);
+
+let incrementQuantity = (product) => {
+    console.log('increment quantity product:', product);
     let updatedIncreaseQty = cart.slice();
     console.log(updatedIncreaseQty);
-    updatedIncreaseQty[index].quantity = updatedIncreaseQty[index].quantity + 1
+    console.log(updatedIncreaseQty[product].quantity);
+      updatedIncreaseQty[product].quantity = updatedIncreaseQty[product].quantity + 1
     setCart(updatedIncreaseQty)
     console.log('New Cart? :' , cart)
     // cart[index].quantity = cart[index].quantity +1;
@@ -76,6 +79,9 @@ let totalPrice = (index) => {
       <div className="close" onClick={() => {props.onCloseArticle()}}></div>
       )   
 
+      // write a for loop, or a REDUCE function that calculates the sum
+      let sum;
+
     return (
       <div id="main" ref={props.setWrapperRef} style={props.timeout ? { display: 'flex' } : { display: 'none' }}>
         <article id="Shop" className={`${props.article === 'Shop' ? 'active' : ''} ${props.articleTimeout ? 'timeout' : ''}`} style={{ display: 'none' }}>
@@ -89,6 +95,7 @@ let totalPrice = (index) => {
         <Prod 
           product={product}
           addItem={addItem}
+          incrementQuantity={incrementQuantity}
         />
       )
       })}
@@ -113,8 +120,11 @@ let totalPrice = (index) => {
                         <button onClick = {() => incrementQuantity(index)}> add </button>
                         <button onClick = {() => decrementQuantity(index)}> subtract </button>
                         <button onClick = {() => deleteItem(index)} > delete item </button>
-                        <button onClick = {() => addItem(index)} > add item </button>
-                        <button onClick = {() => totalPrice(index)} > total </button>
+                        <button onClick = {() => addItem(item)} > add item </button>
+                        <button>
+                          Sum Goes Here
+                          {/* {sum} */}
+                          </button>
                         </div>
                 )
             })}
