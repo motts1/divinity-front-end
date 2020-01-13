@@ -97,7 +97,7 @@ let decrementQuantity = (index) => {
       return(
         <Prod 
           product={product}
-          //addItem={addItem}
+          addItem={addItem}
           incrementQuantity={incrementQuantity}
         />
       )
