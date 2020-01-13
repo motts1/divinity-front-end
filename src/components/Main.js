@@ -66,21 +66,24 @@ let decrementQuantity = (index) => {
     setCart(updateDecreaseQty);
 }
 
-let totalPrice = (index) => {
-    console.log('your total is:', index);
-    let cartTotal = index.price * index.quantity;
-    console.log(cartTotal);
-    setCart(cartTotal);
-  }
 
+// write a for loop, or a REDUCE function that calculates the sum
+//const arrSum = arr => arr.reduce((a,b) => a + b, 0)
 
+// let totalPrice = (index) => {
+//     console.log('your total is:', index);
+//     let cartTotal = index.price * index.quantity;
+//     console.log(cartTotal);
+//     setCart(cartTotal);
+//   }
+
+// let sum = total.reduce((product.quantity*product.price) => product.quantity + product.price)
+// ;
 
  let close = () => (
       <div className="close" onClick={() => {props.onCloseArticle()}}></div>
       )   
 
-      // write a for loop, or a REDUCE function that calculates the sum
-      let sum;
 
     return (
       <div id="main" ref={props.setWrapperRef} style={props.timeout ? { display: 'flex' } : { display: 'none' }}>
@@ -94,7 +97,7 @@ let totalPrice = (index) => {
       return(
         <Prod 
           product={product}
-          addItem={addItem}
+          //addItem={addItem}
           incrementQuantity={incrementQuantity}
         />
       )
@@ -203,8 +206,8 @@ let totalPrice = (index) => {
         </article>
       </div>
     )
-  }
-
+          }
+        
 Main.propTypes = {
   route: PropTypes.object,
   article: PropTypes.string,
