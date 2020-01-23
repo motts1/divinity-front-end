@@ -52,6 +52,7 @@ let incrementQuantity = (product) => {
     let updatedIncreaseQty = cart.slice();
     console.log(updatedIncreaseQty);
     console.log(updatedIncreaseQty[product].quantity);
+
       updatedIncreaseQty[product].quantity = updatedIncreaseQty[product].quantity + 1
     setCart(updatedIncreaseQty)
     console.log('New Cart? :' , cart)
@@ -66,24 +67,18 @@ let decrementQuantity = (index) => {
     setCart(updateDecreaseQty);
 }
 
-
-// write a for loop, or a REDUCE function that calculates the sum
-//const arrSum = arr => arr.reduce((a,b) => a + b, 0)
-
-// let totalPrice = (index) => {
-//     console.log('your total is:', index);
-//     let cartTotal = index.price * index.quantity;
-//     console.log(cartTotal);
-//     setCart(cartTotal);
-//   }
-
-// let sum = total.reduce((product.quantity*product.price) => product.quantity + product.price)
-// ;
+  let emptyTotal = [];
+  let total = 0;
+  cart.map((product, index) => {
+    let setTotal = product.quantity * product.price;
+    emptyTotal.push(setTotal)
+  })
+  let sum = emptyTotal.reduce((a, b ) => a + b , 0)
+  total = sum;
 
  let close = () => (
       <div className="close" onClick={() => {props.onCloseArticle()}}></div>
       )   
-
 
     return (
       <div id="main" ref={props.setWrapperRef} style={props.timeout ? { display: 'flex' } : { display: 'none' }}>
@@ -92,6 +87,8 @@ let decrementQuantity = (index) => {
             <div >
         <Container>
         <Row>
+
+          
       {products.map((product, index) => {
         
       return(
@@ -99,6 +96,7 @@ let decrementQuantity = (index) => {
           product={product}
           addItem={addItem}
           incrementQuantity={incrementQuantity}
+          deleteItem = {deleteItem}
         />
       )
       })}
@@ -124,10 +122,8 @@ let decrementQuantity = (index) => {
                         <button onClick = {() => decrementQuantity(index)}> subtract </button>
                         <button onClick = {() => deleteItem(index)} > delete item </button>
                         <button onClick = {() => addItem(item)} > add item </button>
-                        <button>
-                          Sum Goes Here
-                          {/* {sum} */}
-                          </button>
+                        <h1>
+                           Total: {total}</h1>
                         </div>
                 )
             })}
