@@ -21,7 +21,7 @@ const Main = (props) => {
   let currency= 'USD';
   
   const paypalClient = {
-    sandbox:    'sb-d7tx1957901@business.example.com',
+    sandbox:    'Ae901bw6VX6fJQm_y4u2jDSE4EmnKaehNOG_FxloimD7wBcbtDPW2-p_Lqo3icTH8j4v5es5CRdudZEU',
     production: 'Ae901bw6VX6fJQm_y4u2jDSE4EmnKaehNOG_FxloimD7wBcbtDPW2-p_Lqo3icTH8j4v5es5CRdudZEU',
 }
   useEffect(() => {
