@@ -5,13 +5,26 @@ import Prod from '../components/item'
 import {Container, Row} from 'react-bootstrap'
 
 const Main = (props) => {
-   const [products, setProducts ] = useState([])
-   const [cart, setCart] = useState([])
-
-   useEffect(() => {
-     onLoad()
-   }, [])
-
+  const [products, setProducts] = useState([]);
+  const [cart, setCart] = useState([]);
+  const onSuccess = (payment) => {
+    console.log("pay success:", payment);
+  }
+  const onCancel= (data) => {
+    console.log("payment no: ", data);
+  }
+  const onError = (err) =>{
+    console.log('payment fail', err )
+  }
+  let env = 'sandbox';
+  let currency= 'USD';
+  const paypalClient = {
+    sandbox:    'Ae901bw6VX6fJQm_y4u2jDSE4EmnKaehNOG_FxloimD7wBcbtDPW2-p_Lqo3icTH8j4v5es5CRdudZEU',
+    production: 'Ae901bw6VX6fJQm_y4u2jDSE4EmnKaehNOG_FxloimD7wBcbtDPW2-p_Lqo3icTH8j4v5es5CRdudZEU',
+}
+  useEffect(() => {
+    onLoad()
+  }, [])
 
   async function onLoad() {
    try { 
