@@ -17,7 +17,7 @@ const Header = (props) => (
                 <li><a href="javascript:;" onClick={() => {props.onOpenArticle('Shop')}}>Shop</a></li>
                 <li><a href="javascript:;" onClick={() => {props.onOpenArticle('Cart')}}>Cart</a></li>
                 <li><a href="javascript:;" onClick={() => {props.onOpenArticle('Account')}}>Account</a></li>
-                <li><a href="javascript:;" onClick={() => {props.onOpenArticle('Blog')}}>Blog</a></li>
+                
             </ul>
         </nav>
     </header>
